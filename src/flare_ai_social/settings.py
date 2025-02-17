@@ -26,6 +26,12 @@ class Settings(BaseSettings):
     # Learning rate
     tuning_learning_rate: float = 0.001
 
+    # X (Twitter) API credentials
+    x_api_key: str = ""
+    x_api_secret: str = ""
+    x_access_token: str = ""
+    x_access_secret: str = ""
+
     model_config = SettingsConfigDict(
         env_file=".env",
         extra="ignore",

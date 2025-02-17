@@ -16,10 +16,11 @@ dependencies = [
     "pyopenssl>=25.0.0",
     "requests>=2.32.3",
     "structlog>=25.1.0",
+    "tweepy>=4.14.0"  # <-- Added Tweepy
 ]
 
 [project.scripts]
-start-social = "flare_ai_social.main:start"
+start-social = "flare_ai_social.main:start_social"
 start-tuning = "flare_ai_social.tune_model:start"
 
 [build-system]
