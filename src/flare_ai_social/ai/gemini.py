@@ -97,7 +97,6 @@ class GeminiProvider(BaseAIProvider):
                 response_mime_type=response_mime_type, response_schema=response_schema
             ),
         )
-        self.logger.debug("generate", prompt=prompt, response_text=response.text)
         return ModelResponse(
             text=response.text,
             raw_response=response,
