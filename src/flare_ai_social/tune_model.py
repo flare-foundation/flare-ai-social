@@ -17,6 +17,7 @@ from flare_ai_social.settings import settings
 
 logger = structlog.get_logger(__name__)
 genai.configure(api_key=settings.gemini_api_key)
+sns.set_style("darkgrid")
 
 
 class TrainingEntry(TypedDict):
@@ -74,10 +75,19 @@ def load_training_data(path: Path) -> TrainingData:
     """
     try:
         with path.open() as f:
-            return json.load(f)
+            data = json.load(f)
+        min_dataset_size = 20
+        if len(data) < min_dataset_size:
+            logger.warning(
+                "small dataset, tuning quality may be poor",
+                dataset_size=len(data),
+                min_dataset_size=min_dataset_size,
+            )
     except (json.JSONDecodeError, FileNotFoundError) as e:
         logger.Exception("failed to load training data", error=str(e))
         raise
+    else:
+        return data
 
 
 def save_loss_plot(
@@ -109,7 +119,7 @@ def save_loss_plot(
     return Path(save_path)
 
 
-def start(new_model_id: str = "pugo-hillion") -> None:
+def start() -> None:
     """
     Train a new model with the specified ID.
 
@@ -119,6 +129,7 @@ def start(new_model_id: str = "pugo-hillion") -> None:
     Raises:
         Exception: If model training fails
     """
+    new_model_id = settings.tuned_model_name
     # Delete existing model if present
     delete_existing_model(new_model_id)
 
