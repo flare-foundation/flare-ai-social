@@ -130,7 +130,7 @@ Flare AI Social is composed of a Python-based backend and a JavaScript frontend.
    ```
 
 2. **Configure the Frontend:**
-   Update the backend URL in `chat-ui/src/App.js` for testing:
+   Update the backend URL in `chat-ui/src/components/ChatInterface.js` for testing:
 
    ```js
    const BACKEND_ROUTE = "http://localhost:8080/api/routes/chat/";
